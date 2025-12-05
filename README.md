@@ -106,7 +106,49 @@ Sistema completo de monitoramento da rede óptica Padtec que coleta dados contin
 
 ---
 
-## 🚀 Início Rápido
+## 🚀 Instalação Rápida (Recomendado)
+
+### Instalação Automática
+
+Execute o script de instalação que irá:
+- Verificar e instalar Docker (se necessário)
+- Clonar o repositório
+- Configurar o ambiente
+- Iniciar todos os serviços
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/keslleykledston/16-PadtecMon/master/install.sh | bash
+```
+
+Ou clone manualmente e execute:
+
+```bash
+git clone https://github.com/keslleykledston/16-PadtecMon.git
+cd 16-PadtecMon
+chmod +x install.sh
+./install.sh
+```
+
+### Após a Instalação
+
+1. **Edite o arquivo `.env`** com suas credenciais da API Padtec:
+   ```bash
+   nano .env
+   ```
+   
+2. **Reinicie os serviços**:
+   ```bash
+   docker-compose restart
+   ```
+
+3. **Acesse a aplicação**:
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:8000
+   - API Docs: http://localhost:8000/docs
+
+---
+
+## 🚀 Instalação Manual
 
 ### Pré-requisitos
 - Docker e Docker Compose instalados
@@ -115,7 +157,12 @@ Sistema completo de monitoramento da rede óptica Padtec que coleta dados contin
 
 ### Configuração
 
-1. **Clone o repositório** (quando disponível)
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/keslleykledston/16-PadtecMon.git
+   cd 16-PadtecMon
+   ```
+
 2. **Configure variáveis de ambiente**
    ```bash
    cp .env.example .env
