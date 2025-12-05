@@ -1,0 +1,156 @@
+services:
+  # Database
+  timescaledb:
+    image: timescale/timescaledb:latest-pg15
+    container_name: padtec_timescaledb
+    environment:
+      POSTGRES_DB: padtec
+      POSTGRES_USER: padtec_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-padtec_password}
+    volumes:
+      - timescaledb_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U padtec_user -d padtec"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - padtec_network
+
+  # Message Queue
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: padtec_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-guest}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - padtec_network
+
+  # Data Collector Service
+  collector:
+    build:
+      context: ./services/collector
+      dockerfile: Dockerfile
+    container_name: padtec_collector
+    environment:
+      PADTEC_API_URL: ${PADTEC_API_URL:-http://108.165.140.144:8181/nms-api/}
+      PADTEC_API_TOKEN: ${PADTEC_API_TOKEN}
+      DATABASE_URL: postgresql://padtec_user:${DB_PASSWORD:-padtec_password}@timescaledb:5432/padtec
+      RABBITMQ_URL: amqp://${RABBITMQ_USER:-guest}:${RABBITMQ_PASSWORD:-guest}@rabbitmq:5672/
+      COLLECT_INTERVAL_CRITICAL: ${COLLECT_INTERVAL_CRITICAL:-30}
+      COLLECT_INTERVAL_NORMAL: ${COLLECT_INTERVAL_NORMAL:-300}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - padtec_network
+
+  # Alert Manager Service
+  alert_manager:
+    build:
+      context: ./services/alert_manager
+      dockerfile: Dockerfile
+    container_name: padtec_alert_manager
+    environment:
+      DATABASE_URL: postgresql://padtec_user:${DB_PASSWORD:-padtec_password}@timescaledb:5432/padtec
+      RABBITMQ_URL: amqp://${RABBITMQ_USER:-guest}:${RABBITMQ_PASSWORD:-guest}@rabbitmq:5672/
+      CHECK_INTERVAL: ${CHECK_INTERVAL:-60}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - padtec_network
+
+  # Backend API Service
+  backend:
+    build:
+      context: ./services/backend
+      dockerfile: Dockerfile
+    container_name: padtec_backend
+    environment:
+      DATABASE_URL: postgresql://padtec_user:${DB_PASSWORD:-padtec_password}@timescaledb:5432/padtec
+      RABBITMQ_URL: amqp://${RABBITMQ_USER:-guest}:${RABBITMQ_PASSWORD:-guest}@rabbitmq:5672/
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-your-secret-key-change-in-production}
+      JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3004}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    ports:
+      - "8004:8000"
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - padtec_network
+
+  # Notification Service
+  notifier:
+    build:
+      context: ./services/notifier
+      dockerfile: Dockerfile
+    container_name: padtec_notifier
+    environment:
+      RABBITMQ_URL: amqp://${RABBITMQ_USER:-guest}:${RABBITMQ_PASSWORD:-guest}@rabbitmq:5672/
+      SMTP_SERVER: ${SMTP_SERVER:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - padtec_network
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./services/frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${REACT_APP_API_URL:-http://localhost:8004/api}
+    container_name: padtec_frontend
+    ports:
+      - "3004:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - padtec_network
+
+volumes:
+  timescaledb_data:
+  rabbitmq_data:
+
+networks:
+  padtec_network:
+    driver: bridge
+
