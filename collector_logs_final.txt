@@ -1,0 +1,49 @@
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+{"message": "Starting Data Collector Service"}
+{"message": "Database connection established"}
+{"message": "Database initialized"}
+{"message": "Padtec client initialized"}
+{"message": "Pika version 1.3.2 connecting to ('172.20.0.2', 5672)"}
+{"message": "Socket connected: <socket.socket fd=16, family=2, type=1, proto=6, laddr=('172.20.0.7', 39760), raddr=('172.20.0.2', 5672)>"}
+{"message": "Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x7faa9cf8c0d0>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x7faa9cf8c0d0> params=<URLParameters host=rabbitmq port=5672 virtual_host=/ ssl=False>>)."}
+{"message": "AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x7faa9cf8c0d0> params=<URLParameters host=rabbitmq port=5672 virtual_host=/ ssl=False>>"}
+{"message": "AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x7faa9cf8c0d0> params=<URLParameters host=rabbitmq port=5672 virtual_host=/ ssl=False>>"}
+{"message": "Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x7faa9cf8c0d0> params=<URLParameters host=rabbitmq port=5672 virtual_host=/ ssl=False>>"}
+{"message": "RabbitMQ connection established"}
+{"message": "Adding job tentatively -- it will be properly scheduled when the scheduler starts"}
+{"message": "Adding job tentatively -- it will be properly scheduled when the scheduler starts"}
+{"message": "Adding job tentatively -- it will be properly scheduled when the scheduler starts"}
+{"message": "Scheduled jobs configured"}
+{"message": "Added job \"Collect Cards Inventory\" to job store \"default\""}
+{"message": "Added job \"Collect Critical Measurements\" to job store \"default\""}
+{"message": "Added job \"Collect Normal Measurements\" to job store \"default\""}
+{"message": "Scheduler started"}
+{"message": "Scheduler started"}
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+{"message": "Starting card collection"}
+{"message": "HTTP Request: GET http://108.165.140.144:8181/nms-api/v1/inventory/state \"HTTP/1.1 200 OK\""}
+{"message": "Fetched 10 cards from API"}
+{"message": "Upserting card 294: {'card_serial': '294', 'card_part': '2262', 'card_family': 'MUX_DEMUX', 'card_model': 'MDDC21401ST2', 'location_site': '01 - INFORR-MNS-KTG', 'slot_number': None, 'status': 'UNKNOWN', 'installed_at': None, 'last_updated': datetime.datetime(2025, 12, 5, 2, 33, 10, 116071)}"}
+{"message": "Card 294 upserted. Rowcount: 1"}
+{"message": "Upserting card 753: {'card_serial': '753', 'card_part': '2262', 'card_family': 'MUX_DEMUX', 'card_model': 'MDDC21401ST2', 'location_site': '03 - INFORR-ABNR-01', 'slot_number': None, 'status': 'UNKNOWN', 'installed_at': None, 'last_updated': datetime.datetime(2025, 12, 5, 2, 33, 10, 151504)}"}
+{"message": "Card 753 upserted. Rowcount: 1"}
+{"message": "Upserting card 754: {'card_serial': '754', 'card_part': '2262', 'card_family': 'MUX_DEMUX', 'card_model': 'MDDC21401ST2', 'location_site': '02 - INFORR-PFG-CNT', 'slot_number': None, 'status': 'UNKNOWN', 'installed_at': None, 'last_updated': datetime.datetime(2025, 12, 5, 2, 33, 10, 155141)}"}
+{"message": "Card 754 upserted. Rowcount: 1"}
+{"message": "Upserting card 755: {'card_serial': '755', 'card_part': '2262', 'card_family': 'MUX_DEMUX', 'card_model': 'MDDC21401ST2', 'location_site': '03 - INFORR-ABNR-01', 'slot_number': None, 'status': 'UNKNOWN', 'installed_at': None, 'last_updated': datetime.datetime(2025, 12, 5, 2, 33, 10, 158515)}"}
+{"message": "Card 755 upserted. Rowcount: 1"}
+{"message": "Upserting card 756: {'card_serial': '756', 'card_part': '2262', 'card_family': 'MUX_DEMUX', 'card_model': 'MDDC21401ST2', 'location_site': '02 - INFORR-PFG-CNT', 'slot_number': None, 'status': 'UNKNOWN', 'installed_at': None, 'last_updated': datetime.datetime(2025, 12, 5, 2, 33, 10, 164020)}"}
+{"message": "Card 756 upserted. Rowcount: 1"}
+{"message": "Upserting card 759: {'card_serial': '759', 'card_part': '2262', 'card_family': 'MUX_DEMUX', 'card_model': 'MDDC21401ST2', 'location_site': '05 - INFORR-RNP-CNT', 'slot_number': None, 'status': 'UNKNOWN', 'installed_at': None, 'last_updated': datetime.datetime(2025, 12, 5, 2, 33, 10, 167952)}"}
+{"message": "Card 759 upserted. Rowcount: 1"}
+{"message": "Upserting card 760: {'card_serial': '760', 'card_part': '2262', 'card_family': 'MUX_DEMUX', 'card_model': 'MDDC21401ST2', 'location_site': '04 - INFORR-RNP-JNDA', 'slot_number': None, 'status': 'UNKNOWN', 'installed_at': None, 'last_updated': datetime.datetime(2025, 12, 5, 2, 33, 10, 171706)}"}
+{"message": "Card 760 upserted. Rowcount: 1"}
+{"message": "Upserting card 761: {'card_serial': '761', 'card_part': '2262', 'card_family': 'MUX_DEMUX', 'card_model': 'MDDC21401ST2', 'location_site': '05 - INFORR-RNP-CNT', 'slot_number': None, 'status': 'UNKNOWN', 'installed_at': None, 'last_updated': datetime.datetime(2025, 12, 5, 2, 33, 10, 174500)}"}
+{"message": "Card 761 upserted. Rowcount: 1"}
+{"message": "Upserting card 762: {'card_serial': '762', 'card_part': '2262', 'card_family': 'MUX_DEMUX', 'card_model': 'MDDC21401ST2', 'location_site': '04 - INFORR-RNP-JNDA', 'slot_number': None, 'status': 'UNKNOWN', 'installed_at': None, 'last_updated': datetime.datetime(2025, 12, 5, 2, 33, 10, 177524)}"}
+{"message": "Card 762 upserted. Rowcount: 1"}
+{"message": "Upserting card 5480353: {'card_serial': '5480353', 'card_part': '2262', 'card_family': 'MUX_DEMUX', 'card_model': 'MDDC21401ST2', 'location_site': '06-INFORR-RNP-NVP', 'slot_number': None, 'status': 'UNKNOWN', 'installed_at': None, 'last_updated': datetime.datetime(2025, 12, 5, 2, 33, 10, 181401)}"}
+{"message": "Card 5480353 upserted. Rowcount: 1"}
+{"message": "Card collection completed: 10 cards processed"}
+INFO:     172.20.0.6:58920 - "POST /collector/sync-sites HTTP/1.1" 200 OK

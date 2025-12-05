@@ -1,0 +1,178 @@
+Manus, preciso que você realize uma análise completa da API da Padtec, utilizando as informações e exemplos já fornecidos em nossas conversas anteriores, incluindo:
+
+Token informado
+
+Endpoint de medições
+
+Exemplo de retorno JSON (como o que contém: cardPart, cardSerial, locationSite, measureName, measureValue, etc.)
+
+PDF que eu enviei (documentação técnica Padtec)
+
+Com base nisso, quero que você produza um projeto completo, incluindo:
+
+1️⃣ — Análise completa da API Padtec
+
+Explique:
+
+Estrutura geral da API
+
+Entidades principais (cartões, amplificadores, transponders, medidas, parâmetros ópticos etc.)
+
+Campos importantes do JSON (ex: cardFamily, cardModel, measureGroup, measureKey, updatedAt, etc.)
+
+Padrões de autenticação
+
+Limitações e melhores práticas
+
+Frequência ideal de coleta
+
+Quais endpoints devem ser consultados para compor um monitoramento completo
+
+2️⃣ — Proposta técnica de arquitetura de aplicação
+
+Crie uma arquitetura completa para um sistema que:
+
+Consuma a API Padtec periodicamente (ex: a cada 30s, 1 min ou 5 min)
+
+Detecte automaticamente todas as placas instaladas na rede (baseado em cardFamily, cardModel, cardPart)
+
+Colete todas as medições disponíveis (POWER, OPTICAL, TEMPERATURE, etc.)
+
+Normalize e armazene tudo em um banco de dados time-series (ex: InfluxDB ou TimescaleDB)
+
+Gere gráficos e dashboards estilo Grafana
+
+Gere alertas automáticos (Telegram, WhatsApp, webhook, email)
+
+Tenha interface web com:
+
+Lista de sites
+
+Lista de cards detectados
+
+Últimas medições
+
+Histórico
+
+Tendências
+
+Alarmes ativos
+
+Tela detalhada por placa
+
+Descreva:
+
+Backend (Python / FastAPI / Node)
+
+Banco recomendado
+
+Scheduler (Cron, Celery, APScheduler)
+
+API interna da aplicação
+
+Frontend (React, Tailwind, Grafana-like)
+
+Containers (Docker Compose)
+
+Estrutura de microsserviços (se fizer sentido)
+
+3️⃣ — Fluxo completo de coleta de dados
+
+Gerar um diagrama textual descrevendo:
+
+Autenticação no endpoint Padtec
+
+Busca de inventário (listar cards)
+
+Para cada card:
+
+Descobrir tipos de medidas disponíveis
+
+Consultar valores
+
+Armazenar em banco
+
+Regra de alerta
+
+Threshold
+
+Comparação histórica
+
+Disparar notificação
+
+Exposição em API interna
+
+Exibição no dashboard
+
+4️⃣ — Dashboard estilo Grafana
+
+Crie a especificação de um painel contendo:
+
+Cards individuais
+
+Pump Power
+
+OsNR
+
+In/Out Power
+
+Status Up/Down
+
+Tendência horária/diária
+
+Timeline de alarmes
+
+Tabela com últimas medições
+
+Dashboard geral por site
+
+Dashboard detalhado por card/modelo
+
+Com sugestões visuais, cores e organização.
+
+5️⃣ — Regras de Alerta
+
+Quero regras do tipo:
+
+Pump Power fora do range
+
+Perda de potência maior que X dBm
+
+OsNR abaixo do limite
+
+Card Down
+
+Falta de atualização (telemetria atrasada)
+
+Histórico detectando degradação gradual
+
+Inclua também:
+
+Frequência de verificação
+
+Histerese para evitar flapping
+
+Severidade (Minor / Major / Critical)
+
+6️⃣ — Entrega esperada
+
+Gerar:
+
+Arquitetura completa da solução (texto + diagrama se possível)
+
+Explicação de todos os módulos
+
+Especificação detalhada da API interna
+
+Modelo de banco de dados (Tabela ou Time Series)
+
+Fluxo operacional
+
+Lista das tecnologias recomendadas
+
+Melhores práticas
+
+Possíveis expansões futuras
+
+Objetivo Final:
+Criar um sistema completo que monitore a rede óptica Padtec, detecte automaticamente as placas, colete dados contínuos, armazene histórico, exiba dashboards estilo Grafana e gere alertas automáticos.

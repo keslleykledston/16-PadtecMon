@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "0a30b0b6-935a-4945-92da-9f71e1d93ee9",
+		"name": "PADTEC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41968398"
+	},
+	"item": [
+		{
+			"name": "Alarmes Ativos - Alarm State",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWR0ZWNtb24iLCJpYXQiOjE3NjQ4OTYwMjN9.v0yRXGDXBLeWTfJPhVIEQhpyYvSCgCkHDTE4xLGVA_M",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://108.165.140.144:8181/nms-api/v1/measures/state?page=0&size=10",
+					"protocol": "http",
+					"host": [
+						"108",
+						"165",
+						"140",
+						"144"
+					],
+					"port": "8181",
+					"path": [
+						"nms-api",
+						"v1",
+						"measures",
+						"state"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alarmes Ativos - Alarm State Copy",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
